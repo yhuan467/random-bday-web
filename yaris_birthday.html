@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Yaris' Birthday — Chef K</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,600&family=IM+Fell+English:ital@0;1&family=Caveat:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --cream:#F5F0E8;
+  --parchment:#EDE7D8;
+  --crimson:#8B1A1A;
+  --crimson-deep:#5C0F0F;
+  --crimson-light:#B02828;
+  --dark:#1A0808;
+  --gold:#9A7A3A;
+  --stripe:#8B1A1A;
+}
+html,body{min-height:100%;background:var(--cream);font-family:'Cormorant Garamond',serif;color:var(--dark);overflow-x:hidden}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;width:100%;position:relative;flex-direction:column;align-items:center;justify-content:flex-start}
+.page.active{display:flex}
+.page-center{justify-content:center}
+
+/* ── STRIPE BG ── */
+#stripe-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;
+  background-image:repeating-linear-gradient(
+    to right,
+    transparent,
+    transparent 22px,
+    rgba(139,26,26,0.09) 22px,
+    rgba(139,26,26,0.09) 28px
+  );
+}
+#deco-bg{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+#deco-bg svg{width:100%;height:100%;position:absolute;top:0;left:0}
+
+/* ── SHARED INNER ── */
+.inner{position:relative;z-index:1;width:100%;max-width:400px;padding:0 22px;text-align:center}
+.menu-inner{position:relative;z-index:1;width:100%;max-width:440px;padding:60px 24px 100px}
+
+/* ── CHEF K ── */
+.chef-wrap{margin:0 auto 10px;animation:float 3.5s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+
+/* ── LANDING ── */
+.land-eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px;opacity:0.78}
+.land-title{font-family:'IM Fell English',serif;font-style:italic;font-size:56px;color:var(--crimson-deep);line-height:0.95;margin-bottom:6px}
+.land-sub{font-family:'Caveat',cursive;font-size:17px;color:var(--crimson);opacity:0.55;margin-bottom:30px;line-height:1.5}
+
+.name-label{display:block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--crimson);opacity:0.65;margin-bottom:10px}
+.name-input{
+  width:100%;max-width:260px;
+  background:transparent;border:none;border-bottom:1.5px solid rgba(139,26,26,0.5);
+  padding:8px 4px;
+  font-family:'IM Fell English',serif;font-style:italic;font-size:24px;color:var(--crimson-deep);
+  text-align:center;outline:none;display:block;margin:0 auto 16px;
+}
+.name-input::placeholder{color:rgba(139,26,26,0.25)}
+.name-input:focus{border-bottom-color:var(--crimson-deep)}
+
+.btn-primary{
+  display:inline-block;padding:11px 34px;
+  border:1.5px solid var(--crimson);border-radius:2px;background:var(--crimson);
+  font-family:'Cormorant Garamond',serif;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--cream);cursor:pointer;transition:all 0.2s;width:100%;max-width:240px;
+}
+.btn-primary:hover{background:transparent;color:var(--crimson)}
+
+.btn-ghost{
+  display:inline-block;padding:10px 28px;margin-top:10px;
+  border:1px solid rgba(139,26,26,0.4);border-radius:2px;background:transparent;
+  font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;
+  color:var(--crimson);opacity:0.72;cursor:pointer;transition:all 0.2s;width:100%;max-width:240px;
+}
+.btn-ghost:hover{border-color:var(--crimson);opacity:1}
+
+.chef-note{font-family:'Caveat',cursive;font-size:13.5px;color:var(--crimson);opacity:0.45;margin-top:18px;line-height:1.6}
+
+/* ── HISTORY ── */
+.hist-inner{position:relative;z-index:1;width:100%;max-width:420px;padding:60px 22px 80px}
+.hist-title{font-family:'IM Fell English',serif;font-style:italic;font-size:32px;color:var(--crimson-deep);margin-bottom:4px;text-align:center}
+.hist-sub{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--crimson);text-align:center;margin-bottom:22px;opacity:0.65}
+.hist-list{display:flex;flex-direction:column;gap:10px}
+.hist-card{
+  border:1px solid rgba(139,26,26,0.3);border-radius:2px;
+  padding:12px 14px;background:rgba(255,252,248,0.7);text-align:left;
+}
+.hist-card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
+.hist-name{font-size:15px;font-weight:600;color:var(--dark);letter-spacing:0.03em}
+.hist-time{font-size:10.5px;color:rgba(139,26,26,0.45);font-style:italic}
+.hist-row{font-size:12.5px;color:var(--crimson-deep);padding:2px 0;font-style:italic;line-height:1.5}
+.hist-cat{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);font-style:normal;margin-right:5px;opacity:0.7}
+.hist-empty{font-family:'Caveat',cursive;font-size:16px;color:rgba(139,26,26,0.4);text-align:center;padding:28px 0}
+
+/* ── MENU ── */
+.menu-header{text-align:center;margin-bottom:4px}
+.menu-for{font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:4px;opacity:0.72}
+.menu-title{font-family:'IM Fell English',serif;font-style:italic;font-size:50px;color:var(--crimson-deep);line-height:1}
+.menu-tagline{font-family:'Caveat',cursive;font-size:15px;color:var(--crimson);opacity:0.5;margin-top:4px;margin-bottom:2px}
+
+.divider{display:flex;align-items:center;gap:8px;margin:18px 0 11px}
+.dline{flex:1;height:0.5px;background:rgba(139,26,26,0.35)}
+.dstar{font-size:9px;color:var(--crimson);opacity:0.7}
+
+.sec-title{font-family:'IM Fell English',serif;font-style:italic;font-size:29px;color:var(--crimson-deep);text-align:center;margin-bottom:9px}
+
+.opts{display:flex;flex-direction:column;gap:7px}
+.opt{
+  border:1px solid rgba(139,26,26,0.28);border-radius:2px;
+  padding:10px 13px;cursor:pointer;
+  background:rgba(255,252,248,0.55);transition:all 0.17s;
+  user-select:none;-webkit-tap-highlight-color:transparent;
+}
+.opt:hover{background:rgba(255,252,248,0.85);border-color:rgba(139,26,26,0.55)}
+.opt.sel{background:rgba(255,252,248,0.97);border-color:var(--crimson);border-width:1.5px}
+.opt-top{display:flex;align-items:center;gap:9px}
+.opt-dot{
+  width:15px;height:15px;border:1.5px solid var(--crimson);border-radius:50%;
+  flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+  opacity:0.6;
+}
+.opt.sel .opt-dot{background:var(--crimson);border-color:var(--crimson);opacity:1}
+.opt.sel .opt-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);display:block}
+.opt-name{font-size:13.5px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark)}
+.opt-desc{font-style:italic;font-size:12px;color:rgba(92,15,15,0.65);margin-top:3px;padding-left:24px;line-height:1.5}
+.opt-wink{font-size:12px;color:var(--crimson-light);margin-top:2px;padding-left:24px;font-family:'Caveat',cursive}
+
+/* tips */
+.tips-box{
+  border:1px solid rgba(139,26,26,0.28);border-radius:2px;
+  padding:13px 15px;background:rgba(255,252,248,0.4);
+}
+.tips-lbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:9px;text-align:center;opacity:0.7}
+.tip-row{
+  display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;
+  padding:8px 10px;border-radius:2px;border:1px solid rgba(139,26,26,0.22);
+  background:rgba(255,252,248,0.45);cursor:pointer;transition:all 0.15s;
+}
+.tip-row:last-child{margin-bottom:0}
+.tip-row:hover{background:rgba(255,252,248,0.8)}
+.tip-row.sel{background:rgba(255,252,248,0.97);border-color:var(--crimson)}
+.tip-pct{font-family:'IM Fell English',serif;font-size:20px;color:var(--crimson-deep);flex-shrink:0;width:38px;text-align:center;margin-top:1px}
+.tip-desc{font-style:italic;font-size:12px;color:rgba(92,15,15,0.65);line-height:1.5}
+.tip-desc strong{font-style:normal;font-weight:600;font-size:12.5px;color:var(--dark);letter-spacing:0.03em}
+
+/* submit */
+.submit-area{margin-top:22px;text-align:center}
+.submit-note{font-family:'Caveat',cursive;font-size:13.5px;color:var(--crimson);opacity:0.55;margin-bottom:11px;line-height:1.6}
+
+/* ── THANKS ── */
+.thanks-inner{position:relative;z-index:1;width:100%;max-width:380px;padding:60px 22px 80px;text-align:center}
+.thanks-title{font-family:'IM Fell English',serif;font-style:italic;font-size:38px;color:var(--crimson-deep);margin-bottom:5px}
+.thanks-sub{font-family:'Caveat',cursive;font-size:18px;color:var(--crimson);margin-bottom:20px;opacity:0.8}
+.order-summary{border:1px solid rgba(139,26,26,0.3);border-radius:2px;padding:14px 18px;background:rgba(255,252,248,0.6);text-align:left;margin-bottom:18px}
+.ord-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:0.5px solid rgba(139,26,26,0.15);font-size:13px}
+.ord-row:last-child{border-bottom:none}
+.ord-cat{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);opacity:0.65}
+.ord-val{font-style:italic;color:var(--crimson-deep);font-size:13.5px}
+.thanks-note{font-family:'Caveat',cursive;font-size:15px;color:var(--crimson);opacity:0.6;line-height:1.8}
+
+/* back link */
+.back-link{
+  display:inline-block;margin-top:18px;
+  font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--crimson);opacity:0.5;cursor:pointer;
+  text-decoration:none;border-bottom:0.5px solid rgba(139,26,26,0.3);
+  padding-bottom:1px;transition:opacity 0.2s;
+  font-family:'Cormorant Garamond',serif;
+}
+.back-link:hover{opacity:1}
+
+/* toast */
+.toast{
+  position:fixed;bottom:22px;left:50%;transform:translateX(-50%);
+  background:var(--crimson-deep);color:var(--cream);
+  font-size:13px;letter-spacing:0.05em;
+  padding:10px 24px;border-radius:2px;
+  opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;
+  font-family:'Cormorant Garamond',serif;font-style:italic;white-space:nowrap;
+}
+.toast.on{opacity:1}
+
+/* ── BORDER FRAME ── */
+.page-frame{
+  position:fixed;top:12px;left:12px;right:12px;bottom:12px;
+  border:1px solid rgba(139,26,26,0.25);pointer-events:none;z-index:2;
+}
+.page-frame-inner{
+  position:fixed;top:16px;left:16px;right:16px;bottom:16px;
+  border:0.5px solid rgba(139,26,26,0.14);pointer-events:none;z-index:2;
+}
+</style>
+</head>
+<body>
+
+<!-- ─── STRIPE + DECO BACKGROUND ─── -->
+<div id="stripe-bg"></div>
+<div id="deco-bg">
+<svg viewBox="0 0 430 900" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+  <!-- soft parchment washes -->
+  <rect width="430" height="900" fill="#F5F0E8" opacity="0"/>
+  <ellipse cx="80" cy="140" rx="130" ry="110" fill="#8B1A1A" opacity="0.04"/>
+  <ellipse cx="350" cy="720" rx="150" ry="120" fill="#8B1A1A" opacity="0.035"/>
+
+  <!-- LEFT VINE - thin elegant -->
+  <path d="M36 0 Q24 120 36 240 Q48 355 28 470 Q14 580 34 690 Q50 790 30 900" fill="none" stroke="#8B1A1A" stroke-width="0.9" opacity="0.3"/>
+  <!-- RIGHT VINE -->
+  <path d="M394 0 Q406 120 394 240 Q382 355 402 470 Q416 580 396 690 Q380 790 400 900" fill="none" stroke="#8B1A1A" stroke-width="0.9" opacity="0.3"/>
+
+  <!-- TOP BOW (crimson ribbon, elegant) -->
+  <ellipse cx="215" cy="24" rx="9" ry="7" fill="#8B1A1A" opacity="0.55"/>
+  <!-- left loop -->
+  <path d="M206 24 Q176 8 158 20 Q146 30 162 38 Q180 46 206 30" fill="#8B1A1A" opacity="0.18" stroke="#8B1A1A" stroke-width="0.8" opacity="0.4"/>
+  <!-- right loop -->
+  <path d="M224 24 Q254 8 272 20 Q284 30 268 38 Q250 46 224 30" fill="#8B1A1A" opacity="0.15" stroke="#8B1A1A" stroke-width="0.8" opacity="0.38"/>
+  <!-- ribbon tails -->
+  <path d="M206 30 Q188 50 176 78 Q166 100 176 118" fill="none" stroke="#8B1A1A" stroke-width="1.2" opacity="0.28"/>
+  <path d="M224 30 Q242 50 254 78 Q264 100 254 118" fill="none" stroke="#8B1A1A" stroke-width="1.2" opacity="0.28"/>
+
+  <!-- TOP-LEFT: elegant candlestick (like image 1) -->
+  <g transform="translate(30,60)" opacity="0.45">
+    <!-- candle flame -->
+    <ellipse cx="12" cy="0" rx="4" ry="6" fill="#8B1A1A" opacity="0.5"/>
+    <!-- candle body -->
+    <rect x="9" y="6" width="6" height="30" rx="1" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <!-- candlestick cup -->
+    <path d="M6 36 Q12 34 18 36 L20 40 Q12 42 4 40 Z" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <!-- stem -->
+    <line x1="12" y1="40" x2="12" y2="58" stroke="#8B1A1A" stroke-width="1.2"/>
+    <!-- base -->
+    <ellipse cx="12" cy="60" rx="14" ry="5" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <!-- bow on candlestick -->
+    <path d="M6 48 Q12 44 18 48" fill="none" stroke="#8B1A1A" stroke-width="1.5"/>
+    <path d="M4 47 Q12 41 8 44" fill="#8B1A1A" opacity="0.25"/>
+    <path d="M20 47 Q12 41 16 44" fill="#8B1A1A" opacity="0.22"/>
+  </g>
+
+  <!-- TOP-RIGHT: elegant plate -->
+  <g transform="translate(378,75)" opacity="0.4">
+    <ellipse cx="18" cy="18" rx="22" ry="22" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <ellipse cx="18" cy="18" rx="16" ry="16" fill="none" stroke="#8B1A1A" stroke-width="0.6"/>
+    <ellipse cx="18" cy="18" rx="6" ry="6" fill="none" stroke="#8B1A1A" stroke-width="0.8"/>
+  </g>
+
+  <!-- LEFT: small leaf sprigs -->
+  <g transform="translate(8,200)" opacity="0.35">
+    <path d="M18 0 Q8 12 4 24 Q10 20 18 0Z" fill="#8B1A1A"/>
+    <path d="M18 0 Q28 12 32 24 Q26 20 18 0Z" fill="#8B1A1A" opacity="0.7"/>
+    <path d="M18 0 Q4 18 2 32 Q10 28 18 0Z" fill="#8B1A1A" opacity="0.5"/>
+    <line x1="18" y1="0" x2="16" y2="32" stroke="#8B1A1A" stroke-width="0.8"/>
+  </g>
+  <!-- LEFT: small leaf mid -->
+  <g transform="translate(4,380)" opacity="0.3">
+    <path d="M20 0 Q5 15 2 30 Q12 24 20 0Z" fill="#8B1A1A"/>
+    <path d="M20 0 Q35 15 38 30 Q28 24 20 0Z" fill="#8B1A1A" opacity="0.75"/>
+    <line x1="20" y1="0" x2="20" y2="30" stroke="#8B1A1A" stroke-width="0.7"/>
+  </g>
+  <!-- LEFT: wine glass -->
+  <g transform="translate(6,490)" opacity="0.32">
+    <path d="M16 0 Q26 20 20 35 Q16 42 12 35 Q6 20 16 0Z" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <line x1="16" y1="35" x2="16" y2="56" stroke="#8B1A1A" stroke-width="1"/>
+    <path d="M8 56 Q16 54 24 56" fill="none" stroke="#8B1A1A" stroke-width="1.2"/>
+  </g>
+  <!-- LEFT: small berries -->
+  <g transform="translate(12,610)" opacity="0.35">
+    <circle cx="10" cy="8" r="5" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+    <circle cx="22" cy="12" r="4.5" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+    <circle cx="6" cy="18" r="4" fill="none" stroke="#8B1A1A" stroke-width="0.8"/>
+    <path d="M10 3 Q14 -3 18 3" fill="none" stroke="#8B1A1A" stroke-width="0.8"/>
+  </g>
+  <!-- LEFT leaf bottom -->
+  <g transform="translate(5,740)" opacity="0.28">
+    <path d="M18 0 Q4 14 2 28 Q12 22 18 0Z" fill="#8B1A1A"/>
+    <path d="M18 0 Q32 14 34 28 Q24 22 18 0Z" fill="#8B1A1A" opacity="0.7"/>
+    <line x1="18" y1="0" x2="17" y2="28" stroke="#8B1A1A" stroke-width="0.7"/>
+  </g>
+
+  <!-- RIGHT: second candlestick -->
+  <g transform="translate(382,65)" opacity="0.38">
+    <ellipse cx="12" cy="0" rx="3.5" ry="5.5" fill="#8B1A1A" opacity="0.45"/>
+    <rect x="9.5" y="6" width="5" height="26" rx="1" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+    <path d="M7 32 Q12 30 17 32 L18 36 Q12 38 6 36 Z" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+    <line x1="12" y1="36" x2="12" y2="52" stroke="#8B1A1A" stroke-width="1"/>
+    <ellipse cx="12" cy="54" rx="12" ry="4" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+  </g>
+  <!-- RIGHT leaf sprigs -->
+  <g transform="translate(404,200)" opacity="0.32">
+    <path d="M10 0 Q20 12 24 24 Q18 20 10 0Z" fill="#8B1A1A"/>
+    <path d="M10 0 Q0 12 -4 24 Q2 20 10 0Z" fill="#8B1A1A" opacity="0.7"/>
+    <line x1="10" y1="0" x2="10" y2="24" stroke="#8B1A1A" stroke-width="0.8"/>
+  </g>
+  <!-- RIGHT: fruit bowl outline -->
+  <g transform="translate(388,360)" opacity="0.3">
+    <path d="M0 28 Q20 10 40 28 Q36 44 20 46 Q4 44 0 28Z" fill="none" stroke="#8B1A1A" stroke-width="0.9"/>
+    <circle cx="14" cy="22" r="6" fill="none" stroke="#8B1A1A" stroke-width="0.8"/>
+    <circle cx="26" cy="20" r="6" fill="none" stroke="#8B1A1A" stroke-width="0.8"/>
+    <circle cx="20" cy="30" r="5" fill="none" stroke="#8B1A1A" stroke-width="0.7"/>
+  </g>
+  <!-- RIGHT wine glass -->
+  <g transform="translate(408,490)" opacity="0.3">
+    <path d="M12 0 Q20 18 15 30 Q12 36 9 30 Q4 18 12 0Z" fill="none" stroke="#8B1A1A" stroke-width="1"/>
+    <line x1="12" y1="30" x2="12" y2="48" stroke="#8B1A1A" stroke-width="1"/>
+    <path d="M5 48 Q12 46 19 48" fill="none" stroke="#8B1A1A" stroke-width="1.1"/>
+  </g>
+  <!-- RIGHT leaf bottom -->
+  <g transform="translate(402,740)" opacity="0.27">
+    <path d="M10 0 Q0 14 -2 28 Q8 22 10 0Z" fill="#8B1A1A"/>
+    <path d="M10 0 Q20 14 22 28 Q12 22 10 0Z" fill="#8B1A1A" opacity="0.7"/>
+    <line x1="10" y1="0" x2="10" y2="28" stroke="#8B1A1A" stroke-width="0.7"/>
+  </g>
+
+  <!-- BOTTOM BOW -->
+  <ellipse cx="215" cy="876" rx="9" ry="7" fill="#8B1A1A" opacity="0.5"/>
+  <path d="M206 876 Q176 860 158 872 Q146 882 162 890 Q180 898 206 882" fill="#8B1A1A" opacity="0.16" stroke="#8B1A1A" stroke-width="0.8"/>
+  <path d="M224 876 Q254 860 272 872 Q284 882 268 890 Q250 898 224 882" fill="#8B1A1A" opacity="0.14" stroke="#8B1A1A" stroke-width="0.8"/>
+  <path d="M206 882 Q188 864 174 838" fill="none" stroke="#8B1A1A" stroke-width="1.2" opacity="0.26"/>
+  <path d="M224 882 Q242 864 256 838" fill="none" stroke="#8B1A1A" stroke-width="1.2" opacity="0.26"/>
+
+  <!-- scattered small stars/diamonds -->
+  <text x="78" y="44" font-size="8" fill="#8B1A1A" opacity="0.35" font-family="serif">✦</text>
+  <text x="320" y="38" font-size="7" fill="#8B1A1A" opacity="0.3" font-family="serif">✦</text>
+  <text x="55" y="290" font-size="7" fill="#8B1A1A" opacity="0.28" font-family="serif">✦</text>
+  <text x="358" y="268" font-size="8" fill="#8B1A1A" opacity="0.3" font-family="serif">✦</text>
+  <text x="360" y="468" font-size="7" fill="#8B1A1A" opacity="0.28" font-family="serif">✦</text>
+  <text x="52" y="478" font-size="6" fill="#8B1A1A" opacity="0.25" font-family="serif">✦</text>
+  <text x="342" y="612" font-size="7" fill="#8B1A1A" opacity="0.28" font-family="serif">✦</text>
+  <text x="62" y="622" font-size="8" fill="#8B1A1A" opacity="0.26" font-family="serif">✦</text>
+  <text x="96" y="838" font-size="7" fill="#8B1A1A" opacity="0.28" font-family="serif">✦</text>
+  <text x="300" y="832" font-size="8" fill="#8B1A1A" opacity="0.28" font-family="serif">✦</text>
+</svg>
+</div>
+
+<!-- Elegant double border frame -->
+<div class="page-frame"></div>
+<div class="page-frame-inner"></div>
+
+<!-- ════════════════════════════
+     PAGE: LANDING
+════════════════════════════ -->
+<div id="pg-land" class="page page-center active">
+  <div class="inner" style="padding-top:0">
+
+    <!-- Chef K — elegant European bunny -->
+    <div class="chef-wrap" style="width:160px;height:170px">
+      <svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+        <!-- Floppy ears (Holland Lop style, elegant) -->
+        <!-- left ear floppy -->
+        <path d="M78 80 Q62 60 46 42 Q30 22 34 8 Q40 -2 52 4 Q64 10 72 36 Q78 56 80 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M76 78 Q62 60 50 42 Q38 24 42 10 Q48 4 54 8 Q64 16 70 40 Q74 58 76 76" fill="#E8D0D0" opacity="0.55"/>
+        <!-- right ear floppy -->
+        <path d="M122 80 Q138 60 154 42 Q170 22 166 8 Q160 -2 148 4 Q136 10 128 36 Q122 56 120 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M124 78 Q138 60 150 42 Q162 24 158 10 Q152 4 146 8 Q136 16 130 40 Q126 58 124 76" fill="#E8D0D0" opacity="0.55"/>
+
+        <!-- Chef hat (toque blanche) -->
+        <rect x="66" y="56" width="68" height="9" rx="2.5" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <ellipse cx="100" cy="52" rx="30" ry="22" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <!-- hat band detail -->
+        <path d="M70 60 Q100 57 130 60" fill="none" stroke="#8B1A1A" stroke-width="0.5" opacity="0.4"/>
+
+        <!-- Head -->
+        <ellipse cx="100" cy="108" rx="44" ry="41" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.3"/>
+        <!-- subtle cheek blush -->
+        <ellipse cx="80" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.14"/>
+        <ellipse cx="120" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.14"/>
+
+        <!-- Eyes — elegant simple dots -->
+        <circle cx="88" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="112" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="89.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+        <circle cx="113.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+
+        <!-- Nose -->
+        <ellipse cx="100" cy="116" rx="4" ry="3" fill="#C87070" opacity="0.85"/>
+        <!-- Whiskers (delicate) -->
+        <line x1="62" y1="113" x2="94" y2="116" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="62" y1="119" x2="94" y2="118" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="106" y1="116" x2="138" y2="113" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="106" y1="118" x2="138" y2="119" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <!-- Mouth -->
+        <path d="M96 120 Q100 126 104 120" fill="none" stroke="#8B1A1A" stroke-width="1.1" opacity="0.7"/>
+
+        <!-- Body -->
+        <ellipse cx="100" cy="186" rx="46" ry="38" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <!-- Apron (white, elegant) -->
+        <path d="M78 152 Q100 146 122 152 L120 200 Q100 207 80 200 Z" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.8" opacity="0.92"/>
+        <!-- Apron neck string -->
+        <path d="M84 154 Q100 149 116 154" fill="none" stroke="#8B1A1A" stroke-width="0.9" opacity="0.45"/>
+        <!-- Apron pocket line -->
+        <path d="M88 180 Q100 178 112 180" fill="none" stroke="#8B1A1A" stroke-width="0.6" opacity="0.3"/>
+
+        <!-- Arms (simple rounded) -->
+        <ellipse cx="60" cy="174" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(-30 60 174)"/>
+        <ellipse cx="140" cy="174" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(30 140 174)"/>
+
+        <!-- K badge on apron — crimson -->
+        <circle cx="100" cy="170" r="11" fill="#8B1A1A" opacity="0.9"/>
+        <text x="100" y="175" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#F5F0E8" text-anchor="middle">K</text>
+
+        <!-- Little bow tie at neck of apron -->
+        <path d="M94 154 Q100 151 106 154" fill="none" stroke="#8B1A1A" stroke-width="1.3" opacity="0.5"/>
+        <ellipse cx="97" cy="153" rx="4" ry="2.5" fill="#8B1A1A" opacity="0.18" transform="rotate(-20 97 153)"/>
+        <ellipse cx="103" cy="153" rx="4" ry="2.5" fill="#8B1A1A" opacity="0.16" transform="rotate(20 103 153)"/>
+      </svg>
+    </div>
+
+    <p class="land-eyebrow">Bienvenue chez</p>
+    <h1 class="land-title">Yaris'<br>Birthday</h1>
+    <p class="land-sub">Chef K's exclusive birthday menu<br>curated with love & mild chaos ✦</p>
+
+    <span class="name-label">Your name, s'il vous plaît</span>
+    <input class="name-input" id="guestName" type="text" placeholder="e.g. Katie…" autocomplete="off" maxlength="40"/>
+
+    <button class="btn-primary" onclick="enterMenu()">See the Menu</button>
+    <br>
+    <button class="btn-ghost" onclick="showHistory()">View Past Orders ✦</button>
+
+    <p class="chef-note">Chef K has been preparing since dawn.<br>Please don't keep him waiting.</p>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     PAGE: HISTORY
+════════════════════════════ -->
+<div id="pg-hist" class="page">
+  <div class="hist-inner">
+    <h2 class="hist-title">Order History</h2>
+    <p class="hist-sub">✦ &nbsp; all orders placed so far &nbsp; ✦</p>
+    <div class="hist-list" id="hist-list"></div>
+    <div style="text-align:center;margin-top:20px">
+      <span class="back-link" onclick="showPage('pg-land')">← Back to Home</span>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     PAGE: MENU
+════════════════════════════ -->
+<div id="pg-menu" class="page">
+  <div class="menu-inner">
+
+    <div class="menu-header">
+      <div class="menu-for">A birthday menu for</div>
+      <div class="menu-title">Yaris</div>
+      <div class="menu-tagline">curated by Chef K · served with love & mild chaos</div>
+    </div>
+
+    <!-- small Chef K on menu page -->
+    <div class="chef-wrap" style="width:62px;height:66px;margin-top:8px;margin-bottom:4px">
+      <svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+        <path d="M78 80 Q62 60 46 42 Q30 22 34 8 Q40 -2 52 4 Q64 10 72 36 Q78 56 80 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M76 78 Q62 60 50 42 Q38 24 42 10 Q48 4 54 8 Q64 16 70 40 Q74 58 76 76" fill="#E8D0D0" opacity="0.55"/>
+        <path d="M122 80 Q138 60 154 42 Q170 22 166 8 Q160 -2 148 4 Q136 10 128 36 Q122 56 120 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M124 78 Q138 60 150 42 Q162 24 158 10 Q152 4 146 8 Q136 16 130 40 Q126 58 124 76" fill="#E8D0D0" opacity="0.55"/>
+        <rect x="66" y="56" width="68" height="9" rx="2.5" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <ellipse cx="100" cy="52" rx="30" ry="22" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <ellipse cx="100" cy="108" rx="44" ry="41" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.3"/>
+        <ellipse cx="80" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.14"/>
+        <ellipse cx="120" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.14"/>
+        <circle cx="88" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="112" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="89.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+        <circle cx="113.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+        <ellipse cx="100" cy="116" rx="4" ry="3" fill="#C87070" opacity="0.85"/>
+        <line x1="62" y1="113" x2="94" y2="116" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="62" y1="119" x2="94" y2="118" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="106" y1="116" x2="138" y2="113" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <line x1="106" y1="118" x2="138" y2="119" stroke="#8B1A1A" stroke-width="0.7" opacity="0.3"/>
+        <path d="M96 120 Q100 126 104 120" fill="none" stroke="#8B1A1A" stroke-width="1.1" opacity="0.7"/>
+        <ellipse cx="100" cy="186" rx="46" ry="38" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M78 152 Q100 146 122 152 L120 200 Q100 207 80 200 Z" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.8" opacity="0.92"/>
+        <ellipse cx="60" cy="174" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(-30 60 174)"/>
+        <ellipse cx="140" cy="174" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(30 140 174)"/>
+        <circle cx="100" cy="170" r="11" fill="#8B1A1A" opacity="0.9"/>
+        <text x="100" y="175" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#F5F0E8" text-anchor="middle">K</text>
+      </svg>
+    </div>
+
+    <!-- MAINS -->
+    <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
+    <div class="sec-title">Mains</div>
+    <div class="opts" id="opts-mains">
+      <div class="opt" onclick="pick(this,'mains')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Fast Food Marathon</span></div>
+        <div class="opt-desc">3+ drive-thrus in one outing. No GPS needed — follow your nose and ignore your doctor. No skipping allowed.</div>
+      </div>
+      <div class="opt" onclick="pick(this,'mains')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Fancy-ish Sit-Down</span></div>
+        <div class="opt-desc">An actual restaurant. Someone wears a nice shirt (TBD who). We act like adults for approximately 40 minutes.</div>
+      </div>
+      <div class="opt" onclick="pick(this,'mains')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Chef K's Tasting Menu</span></div>
+        <div class="opt-desc">Chef K cooks. The birthday person has zero say in what arrives. This is not a negotiation. Trust the bunny.</div>
+      </div>
+    </div>
+
+    <!-- DRINKS -->
+    <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
+    <div class="sec-title">Drinks</div>
+    <div class="opts" id="opts-drinks">
+      <div class="opt" onclick="pick(this,'drinks')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Boba Run</span></div>
+        <div class="opt-desc">Minimum 2 shops. We will debate which is better the entire drive. No resolution will be reached. This is tradition.</div>
+      </div>
+      <div class="opt" onclick="pick(this,'drinks')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Beer & Wine Tasting</span></div>
+        <div class="opt-desc">We nod slowly and say "notes of oak, with hints of regret." Nobody knows what that means. We are having the time of our lives.</div>
+      </div>
+      <div class="opt" onclick="pick(this,'drinks')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Gas Station Special</span></div>
+        <div class="opt-desc">Energy drinks, slurpees, and whatever mystery item is by the register. A terrible, beautiful, fluorescent vibe.</div>
+      </div>
+    </div>
+
+    <!-- EVENING -->
+    <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
+    <div class="sec-title">Evening</div>
+    <div class="opts" id="opts-evening">
+      <div class="opt" onclick="pick(this,'evening')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Camelback Night View</span></div>
+        <div class="opt-desc">Drive up. Sit on the hood. Stare at Phoenix. Someone says something deep. Nobody responds. This is healing.</div>
+      </div>
+      <div class="opt" onclick="pick(this,'evening')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Swimming</span></div>
+        <div class="opt-desc">Pool. Sunset. Chill. Also —</div>
+        <div class="opt-wink">★ Katie will also be there... just for you. You're welcome, Yaris. ★</div>
+      </div>
+      <div class="opt" onclick="pick(this,'evening')">
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Pickleball</span></div>
+        <div class="opt-desc">Very serious for 8–12 minutes. Then completely humbled. Then "one more game" for 2 hours.</div>
+      </div>
+    </div>
+
+    <!-- TIPS -->
+    <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
+    <div class="sec-title">Gratuity</div>
+    <div class="tips-box">
+      <div class="tips-lbl">✦ &nbsp; suggested tip for chef K &nbsp; ✦</div>
+      <div class="tip-row" onclick="pickTip(this,'15%')">
+        <div class="tip-pct">15%</div>
+        <div class="tip-desc"><strong>The Polite Guest</strong> — You had a lovely time. You will write a glowing review. Chef K will frame it next to the fridge.</div>
+      </div>
+      <div class="tip-row" onclick="pickTip(this,'18%')">
+        <div class="tip-pct">18%</div>
+        <div class="tip-desc"><strong>The Generous Soul</strong> — You acknowledge the effort. Chef K's ears perked up. A second scoop may appear. Coincidence? Unclear.</div>
+      </div>
+      <div class="tip-row" onclick="pickTip(this,'20%')">
+        <div class="tip-pct">20%</div>
+        <div class="tip-desc"><strong>The Absolute Legend</strong> — Chef K does a little happy dance. The apron spins. This is the correct answer and everyone knows it.</div>
+      </div>
+    </div>
+
+    <div class="submit-area">
+      <p class="submit-note">Chef K is watching from the kitchen window.<br>Place your order when ready.</p>
+      <button class="btn-primary" onclick="submitOrder()">Place Order ✦</button>
+      <br><span class="back-link" onclick="showPage('pg-land')" style="margin-top:14px;display:inline-block">← Back to Home</span>
+    </div>
+
+  </div>
+</div>
+
+<!-- ════════════════════════════
+     PAGE: THANKS
+════════════════════════════ -->
+<div id="pg-thanks" class="page page-center">
+  <div class="thanks-inner">
+    <div class="chef-wrap" style="width:115px;height:122px">
+      <svg viewBox="0 0 200 230" xmlns="http://www.w3.org/2000/svg">
+        <path d="M78 80 Q62 60 46 42 Q30 22 34 8 Q40 -2 52 4 Q64 10 72 36 Q78 56 80 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M76 78 Q62 60 50 42 Q38 24 42 10 Q48 4 54 8 Q64 16 70 40 Q74 58 76 76" fill="#E8D0D0" opacity="0.55"/>
+        <path d="M122 80 Q138 60 154 42 Q170 22 166 8 Q160 -2 148 4 Q136 10 128 36 Q122 56 120 78" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M124 78 Q138 60 150 42 Q162 24 158 10 Q152 4 146 8 Q136 16 130 40 Q126 58 124 76" fill="#E8D0D0" opacity="0.55"/>
+        <rect x="66" y="56" width="68" height="9" rx="2.5" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <ellipse cx="100" cy="52" rx="30" ry="22" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1"/>
+        <ellipse cx="100" cy="108" rx="44" ry="41" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.3"/>
+        <ellipse cx="80" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.18"/>
+        <ellipse cx="120" cy="114" rx="10" ry="7" fill="#C87070" opacity="0.18"/>
+        <circle cx="88" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="112" cy="103" r="4.5" fill="#1A0808"/>
+        <circle cx="89.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+        <circle cx="113.5" cy="101.5" r="1.8" fill="white" opacity="0.9"/>
+        <ellipse cx="100" cy="116" rx="4" ry="3" fill="#C87070" opacity="0.85"/>
+        <!-- big happy smile for thanks page -->
+        <path d="M88 121 Q100 134 112 121" fill="none" stroke="#8B1A1A" stroke-width="1.5" opacity="0.7"/>
+        <ellipse cx="100" cy="186" rx="46" ry="38" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.2"/>
+        <path d="M78 152 Q100 146 122 152 L120 200 Q100 207 80 200 Z" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.8" opacity="0.92"/>
+        <!-- raised arms for celebration -->
+        <ellipse cx="52" cy="162" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(-55 52 162)"/>
+        <ellipse cx="148" cy="162" rx="13" ry="7" fill="#F5F0E8" stroke="#8B1A1A" stroke-width="1.1" transform="rotate(55 148 162)"/>
+        <circle cx="100" cy="170" r="11" fill="#8B1A1A" opacity="0.9"/>
+        <text x="100" y="175" font-family="Georgia,serif" font-size="13" font-weight="bold" fill="#F5F0E8" text-anchor="middle">K</text>
+      </svg>
+    </div>
+    <h2 class="thanks-title">Order received!</h2>
+    <p class="thanks-sub" id="thanks-line">Chef K is already on it ✦</p>
+    <div class="order-summary" id="order-summary"></div>
+    <p class="thanks-note">Chef K did a little happy dance.<br>The apron spun. It was beautiful.<br><br><em>Happy birthday, Yaris ✦</em></p>
+    <span class="back-link" onclick="goHome()">← Back to Home</span>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+var guest = '';
+var sel = {mains:null, drinks:null, evening:null, tip:null};
+
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function getOrders(){
+  try{return JSON.parse(localStorage.getItem('yaris_orders')||'[]')}catch(e){return[]}
+}
+function saveOrders(a){
+  try{localStorage.setItem('yaris_orders',JSON.stringify(a))}catch(e){}
+}
+
+document.getElementById('guestName').addEventListener('keydown',function(e){if(e.key==='Enter')enterMenu()});
+
+function enterMenu(){
+  var v=document.getElementById('guestName').value.trim();
+  if(!v){toast("Chef K needs your name");return;}
+  guest=v;
+  sel={mains:null,drinks:null,evening:null,tip:null};
+  document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});
+  document.querySelectorAll('.tip-row').forEach(function(r){r.classList.remove('sel')});
+  showPage('pg-menu');
+}
+
+function showHistory(){
+  var orders=getOrders();
+  var el=document.getElementById('hist-list');
+  if(!orders.length){
+    el.innerHTML='<div class="hist-empty">No orders yet — Chef K is waiting patiently</div>';
+  } else {
+    el.innerHTML=orders.map(function(o,i){
+      return '<div class="hist-card">'+
+        '<div class="hist-card-top"><span class="hist-name">'+(i+1)+'. '+o.name+'</span><span class="hist-time">'+o.time+'</span></div>'+
+        '<div class="hist-row"><span class="hist-cat">Mains</span>'+o.mains+'</div>'+
+        '<div class="hist-row"><span class="hist-cat">Drinks</span>'+o.drinks+'</div>'+
+        '<div class="hist-row"><span class="hist-cat">Evening</span>'+o.evening+'</div>'+
+        '<div class="hist-row"><span class="hist-cat">Tip</span>'+o.tip+'</div>'+
+      '</div>';
+    }).join('');
+  }
+  showPage('pg-hist');
+}
+
+function pick(el,sec){
+  document.querySelectorAll('#opts-'+sec+' .opt').forEach(function(o){o.classList.remove('sel')});
+  el.classList.add('sel');
+  sel[sec]=el.querySelector('.opt-name').textContent.trim();
+}
+function pickTip(el,pct){
+  document.querySelectorAll('.tip-row').forEach(function(r){r.classList.remove('sel')});
+  el.classList.add('sel');
+  sel.tip=pct;
+}
+
+function submitOrder(){
+  if(!sel.mains&&!sel.drinks&&!sel.evening){toast("Please pick at least one item");return;}
+  var order={
+    name:guest,
+    time:new Date().toLocaleString(),
+    mains:sel.mains||'—',
+    drinks:sel.drinks||'—',
+    evening:sel.evening||'—',
+    tip:sel.tip||'No tip (Chef K noticed.)'
+  };
+  var orders=getOrders(); orders.push(order); saveOrders(orders);
+  document.getElementById('thanks-line').textContent='Merci, '+guest+' — Chef K is already on it ✦';
+  document.getElementById('order-summary').innerHTML=
+    '<div class="ord-row"><span class="ord-cat">Mains</span><span class="ord-val">'+order.mains+'</span></div>'+
+    '<div class="ord-row"><span class="ord-cat">Drinks</span><span class="ord-val">'+order.drinks+'</span></div>'+
+    '<div class="ord-row"><span class="ord-cat">Evening</span><span class="ord-val">'+order.evening+'</span></div>'+
+    '<div class="ord-row"><span class="ord-cat">Tip</span><span class="ord-val">'+order.tip+'</span></div>';
+  showPage('pg-thanks');
+}
+
+function goHome(){
+  document.getElementById('guestName').value='';
+  showPage('pg-land');
+}
+
+function toast(msg){
+  var t=document.getElementById('toast');
+  t.textContent=msg; t.classList.add('on');
+  setTimeout(function(){t.classList.remove('on')},2600);
+}
+</script>
+</body>
+</html>
