@@ -129,9 +129,11 @@ body{
 .tip-row:last-child{margin-bottom:0}
 .tip-row:hover{background:rgba(250,246,239,0.85)}
 .tip-row.sel{background:#FFF9F4;border-color:var(--crimson)}
-.tip-pct{font-family:'IM Fell English',serif;font-size:18px;color:var(--crimson-deep);flex-shrink:0;width:34px;text-align:center;margin-top:1px}
-.tip-desc{font-style:italic;font-size:11.5px;color:rgba(92,15,15,0.58);line-height:1.5}
-.tip-desc strong{font-style:normal;font-weight:600;font-size:12px;color:var(--crimson-deep)}
+.tip-pill{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;padding:12px 6px;border:1px solid rgba(139,26,26,0.2);border-radius:3px;background:rgba(250,246,239,0.5);cursor:pointer;transition:all 0.15s;user-select:none;-webkit-tap-highlight-color:transparent}
+.tip-pill:hover{background:rgba(250,246,239,0.9);border-color:rgba(139,26,26,0.4)}
+.tip-pill.sel{background:#FFF9F4;border-color:var(--crimson);border-width:1.5px}
+.tip-pct{font-family:'IM Fell English',serif;font-size:20px;color:var(--crimson-deep);text-align:center}
+.tip-label{font-family:'Caveat',cursive;font-size:13px;color:rgba(92,15,15,0.65);text-align:center}
 .submit-area{margin-top:20px;text-align:center}
 .submit-note{font-family:'Caveat',cursive;font-size:13px;color:var(--crimson);opacity:0.5;margin-bottom:10px;line-height:1.6}
 
@@ -295,17 +297,19 @@ body{
     <div class="sec-script">Gratuity</div>
     <div class="tips-box">
       <div class="tips-lbl">✦ &nbsp; suggested tip for chef K &nbsp; ✦</div>
-      <div class="tip-row" onclick="pickTip(this,'15%')">
-        <div class="tip-pct">15%</div>
-        <div class="tip-desc"><strong>The Polite Guest</strong> — You had a lovely time. You will write a glowing review. Chef K will frame it next to the fridge.</div>
-      </div>
-      <div class="tip-row" onclick="pickTip(this,'18%')">
-        <div class="tip-pct">18%</div>
-        <div class="tip-desc"><strong>The Generous Soul</strong> — You acknowledge the effort. Chef K's ears perked up. A second scoop may appear. Coincidence? Unclear.</div>
-      </div>
-      <div class="tip-row" onclick="pickTip(this,'20%')">
-        <div class="tip-pct">20%</div>
-        <div class="tip-desc"><strong>The Absolute Legend</strong> — Chef K does a little happy dance. The apron spins. This is the correct answer and everyone knows it.</div>
+      <div style="display:flex;gap:8px">
+        <div class="tip-pill" onclick="pickTip(this,'15%')">
+          <div class="tip-pct">15%</div>
+          <div class="tip-label">bright smile</div>
+        </div>
+        <div class="tip-pill" onclick="pickTip(this,'18%')">
+          <div class="tip-pct">18%</div>
+          <div class="tip-label">warm hug</div>
+        </div>
+        <div class="tip-pill" onclick="pickTip(this,'20%')">
+          <div class="tip-pct">20%</div>
+          <div class="tip-label">little dance</div>
+        </div>
       </div>
     </div>
 
@@ -350,7 +354,7 @@ document.getElementById('guestName').addEventListener('keydown',function(e){if(e
 function enterMenu(){var v=document.getElementById('guestName').value.trim();if(!v){toast("Chef K needs your name");return;}guest=v;sel={mains:null,drinks:null,evening:null,tip:null};document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});document.querySelectorAll('.tip-row').forEach(function(r){r.classList.remove('sel')});showPage('pg-menu');}
 function showHistory(){var orders=getOrders(),el=document.getElementById('hist-list');if(!orders.length){el.innerHTML='<div class="hist-empty">No orders yet — Chef K is waiting patiently</div>';}else{el.innerHTML=orders.map(function(o,i){return'<div class="hist-card"><div class="hist-card-top"><span class="hist-name">'+(i+1)+'. '+o.name+'</span><span class="hist-time">'+o.time+'</span></div><div class="hist-row"><span class="hist-cat">Mains</span>'+o.mains+'</div><div class="hist-row"><span class="hist-cat">Drinks</span>'+o.drinks+'</div><div class="hist-row"><span class="hist-cat">Evening</span>'+o.evening+'</div><div class="hist-row"><span class="hist-cat">Tip</span>'+o.tip+'</div></div>';}).join('');}showPage('pg-hist');}
 function pick(el,sec){document.querySelectorAll('#opts-'+sec+' .opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');sel[sec]=el.querySelector('.opt-name').textContent.trim();}
-function pickTip(el,pct){document.querySelectorAll('.tip-row').forEach(function(r){r.classList.remove('sel')});el.classList.add('sel');sel.tip=pct;}
+function pickTip(el,pct){document.querySelectorAll('.tip-pill').forEach(function(r){r.classList.remove('sel')});el.classList.add('sel');sel.tip=pct;}
 function submitOrder(){if(!sel.mains&&!sel.drinks&&!sel.evening){toast("Please pick at least one item");return;}var order={name:guest,time:new Date().toLocaleString(),mains:sel.mains||'—',drinks:sel.drinks||'—',evening:sel.evening||'—',tip:sel.tip||'No tip (Chef K noticed.)'};var orders=getOrders();orders.push(order);saveOrders(orders);document.getElementById('thanks-line').textContent='Merci, '+guest+' — Chef K is already on it ✦';document.getElementById('order-summary').innerHTML='<div class="ord-row"><span class="ord-cat">Mains</span><span class="ord-val">'+order.mains+'</span></div><div class="ord-row"><span class="ord-cat">Drinks</span><span class="ord-val">'+order.drinks+'</span></div><div class="ord-row"><span class="ord-cat">Evening</span><span class="ord-val">'+order.evening+'</span></div><div class="ord-row"><span class="ord-cat">Tip</span><span class="ord-val">'+order.tip+'</span></div>';showPage('pg-thanks');}
 function goHome(){document.getElementById('guestName').value='';showPage('pg-land');}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},2600);}
