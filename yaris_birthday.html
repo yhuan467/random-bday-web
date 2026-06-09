@@ -9,158 +9,184 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --cream:#F5F0E8;
+  --cream2:#FAF6EF;
   --crimson:#8B1A1A;
   --crimson-deep:#5C0F0F;
-  --dark:#1A0808;
+  --stripe-w:28px;
 }
-html,body{min-height:100%;background:var(--cream);font-family:'Cormorant Garamond',serif;color:var(--dark);overflow-x:hidden}
-body{background-image:repeating-linear-gradient(
-  to right,transparent,transparent 22px,
-  rgba(139,26,26,0.075) 22px,rgba(139,26,26,0.075) 28px
-)}
-.page{display:none;min-height:100vh;width:100%;position:relative;flex-direction:column;align-items:center;justify-content:flex-start}
+html,body{min-height:100%;font-family:'Cormorant Garamond',serif;color:var(--crimson-deep);overflow-x:hidden}
+
+/* ── Striped background ── */
+body{
+  background-color:var(--cream);
+  background-image:repeating-linear-gradient(
+    to right,
+    var(--cream) 0px,
+    var(--cream) calc(var(--stripe-w) * 0.5),
+    var(--crimson) calc(var(--stripe-w) * 0.5),
+    var(--crimson) var(--stripe-w)
+  );
+  background-size:var(--stripe-w) 100%;
+}
+
+.page{display:none;min-height:100vh;width:100%;flex-direction:column;align-items:center;justify-content:center;padding:24px 16px 40px}
 .page.active{display:flex}
-.page-center{justify-content:center}
 
-/* table deco strips */
-.deco-bottom{position:fixed;bottom:0;left:0;right:0;height:130px;pointer-events:none;z-index:0;overflow:hidden}
-.deco-bottom img{width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:0.2;filter:sepia(80%) hue-rotate(-15deg) saturate(0.5) brightness(0.8)}
-.deco-top{position:fixed;top:0;left:0;right:0;height:90px;pointer-events:none;z-index:0;overflow:hidden}
-.deco-top img{width:100%;height:100%;object-fit:cover;object-position:center 20%;opacity:0.13;filter:sepia(80%) hue-rotate(-15deg) saturate(0.5) brightness(0.8);transform:scaleY(-1)}
+/* ── Oval card ── */
+.card{
+  background:var(--cream2);
+  border:2px solid var(--crimson);
+  border-radius:50% / 8%;
+  padding:44px 36px 44px;
+  width:100%;
+  max-width:370px;
+  text-align:center;
+  position:relative;
+  box-shadow:0 4px 32px rgba(92,15,15,0.13);
+}
+/* thin inner border */
+.card::before{
+  content:'';
+  position:absolute;
+  inset:8px;
+  border:0.75px solid rgba(139,26,26,0.28);
+  border-radius:calc(50% - 4px) / calc(8% - 2px);
+  pointer-events:none;
+}
 
-/* border frame */
-.page-frame{position:fixed;top:10px;left:10px;right:10px;bottom:10px;border:1px solid rgba(139,26,26,0.22);pointer-events:none;z-index:3}
-.page-frame-inner{position:fixed;top:15px;left:15px;right:15px;bottom:15px;border:0.5px solid rgba(139,26,26,0.11);pointer-events:none;z-index:3}
+/* ── Ribbon SVG ── */
+.ribbon{display:block;margin:0 auto 10px;width:80px;height:40px}
 
-.inner{position:relative;z-index:1;width:100%;max-width:400px;padding:0 22px;text-align:center}
-.menu-inner{position:relative;z-index:1;width:100%;max-width:440px;padding:60px 24px 150px}
-
-/* Chef K */
-.chef-wrap{margin:0 auto 10px;animation:float 3.5s ease-in-out infinite;position:relative;display:inline-block}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-.rabbit-crop{overflow:hidden;position:relative;background:transparent;border-radius:4px}
-.rabbit-crop img{position:absolute;image-rendering:auto;mix-blend-mode:multiply}
-
-/* landing */
-.land-eyebrow{font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px;opacity:0.72}
-.land-title{font-family:'IM Fell English',serif;font-style:italic;font-size:56px;color:var(--crimson-deep);line-height:0.95;margin-bottom:6px}
-.land-sub{font-family:'Caveat',cursive;font-size:17px;color:var(--crimson);opacity:0.52;margin-bottom:30px;line-height:1.5}
-.name-label{display:block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:var(--crimson);opacity:0.62;margin-bottom:10px}
-.name-input{width:100%;max-width:260px;background:transparent;border:none;border-bottom:1.5px solid rgba(139,26,26,0.42);padding:8px 4px;font-family:'IM Fell English',serif;font-style:italic;font-size:24px;color:var(--crimson-deep);text-align:center;outline:none;display:block;margin:0 auto 16px}
-.name-input::placeholder{color:rgba(139,26,26,0.2)}
-.name-input:focus{border-bottom-color:var(--crimson-deep)}
-.btn-primary{display:inline-block;padding:11px 34px;border:1.5px solid var(--crimson);border-radius:2px;background:var(--crimson);font-family:'Cormorant Garamond',serif;font-size:12.5px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cream);cursor:pointer;transition:all 0.2s;width:100%;max-width:240px}
-.btn-primary:hover{background:transparent;color:var(--crimson)}
-.btn-ghost{display:inline-block;padding:10px 28px;margin-top:10px;border:1px solid rgba(139,26,26,0.36);border-radius:2px;background:transparent;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--crimson);opacity:0.68;cursor:pointer;transition:all 0.2s;width:100%;max-width:240px}
-.btn-ghost:hover{border-color:var(--crimson);opacity:1}
-.chef-note{font-family:'Caveat',cursive;font-size:13.5px;color:var(--crimson);opacity:0.4;margin-top:18px;line-height:1.6}
-
-/* history */
-.hist-inner{position:relative;z-index:1;width:100%;max-width:420px;padding:60px 22px 80px}
-.hist-title{font-family:'IM Fell English',serif;font-style:italic;font-size:32px;color:var(--crimson-deep);margin-bottom:4px;text-align:center}
-.hist-sub{font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--crimson);text-align:center;margin-bottom:22px;opacity:0.6}
-.hist-list{display:flex;flex-direction:column;gap:10px}
-.hist-card{border:1px solid rgba(139,26,26,0.26);border-radius:2px;padding:12px 14px;background:rgba(255,252,248,0.72);text-align:left}
-.hist-card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:7px}
-.hist-name{font-size:15px;font-weight:600;color:var(--dark)}
-.hist-time{font-size:10.5px;color:rgba(139,26,26,0.4);font-style:italic}
-.hist-row{font-size:12.5px;color:var(--crimson-deep);padding:2px 0;font-style:italic;line-height:1.5}
-.hist-cat{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);font-style:normal;margin-right:5px;opacity:0.65}
-.hist-empty{font-family:'Caveat',cursive;font-size:16px;color:rgba(139,26,26,0.36);text-align:center;padding:28px 0}
-
-/* menu */
-.menu-header{text-align:center;margin-bottom:4px}
-.menu-for{font-size:10.5px;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:4px;opacity:0.68}
-.menu-title{font-family:'IM Fell English',serif;font-style:italic;font-size:50px;color:var(--crimson-deep);line-height:1}
-.menu-tagline{font-family:'Caveat',cursive;font-size:15px;color:var(--crimson);opacity:0.46;margin-top:4px;margin-bottom:2px}
-.divider{display:flex;align-items:center;gap:8px;margin:18px 0 11px}
+/* ── Typography ── */
+.eyebrow{font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--crimson);opacity:0.7;margin-bottom:4px}
+.card-title{font-family:'IM Fell English',serif;font-style:italic;font-size:48px;color:var(--crimson-deep);line-height:0.95;margin-bottom:4px}
+.card-sub{font-family:'Caveat',cursive;font-size:15px;color:var(--crimson);opacity:0.55;margin-bottom:20px;line-height:1.6}
+.sec-script{font-family:'IM Fell English',serif;font-style:italic;font-size:30px;color:var(--crimson-deep);text-align:center;margin-bottom:8px}
+.divider{display:flex;align-items:center;gap:8px;margin:16px 0 10px}
 .dline{flex:1;height:0.5px;background:rgba(139,26,26,0.3)}
 .dstar{font-size:9px;color:var(--crimson);opacity:0.62}
-.sec-title{font-family:'IM Fell English',serif;font-style:italic;font-size:29px;color:var(--crimson-deep);text-align:center;margin-bottom:9px}
-.opts{display:flex;flex-direction:column;gap:7px}
-.opt{border:1px solid rgba(139,26,26,0.23);border-radius:2px;padding:10px 13px;cursor:pointer;background:rgba(255,252,248,0.55);transition:all 0.17s;user-select:none;-webkit-tap-highlight-color:transparent}
-.opt:hover{background:rgba(255,252,248,0.88);border-color:rgba(139,26,26,0.5)}
-.opt.sel{background:rgba(255,252,248,0.97);border-color:var(--crimson);border-width:1.5px}
-.opt-top{display:flex;align-items:center;gap:9px}
-.opt-dot{width:15px;height:15px;border:1.5px solid var(--crimson);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;opacity:0.52}
-.opt.sel .opt-dot{background:var(--crimson);border-color:var(--crimson);opacity:1}
-.opt.sel .opt-dot::after{content:'';width:5px;height:5px;border-radius:50%;background:var(--cream);display:block}
-.opt-name{font-size:13.5px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--dark)}
-.opt-desc{font-style:italic;font-size:12px;color:rgba(92,15,15,0.6);margin-top:3px;padding-left:24px;line-height:1.5}
-.opt-wink{font-size:12px;color:var(--crimson);margin-top:2px;padding-left:24px;font-family:'Caveat',cursive}
-.tips-box{border:1px solid rgba(139,26,26,0.23);border-radius:2px;padding:13px 15px;background:rgba(255,252,248,0.42)}
-.tips-lbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:9px;text-align:center;opacity:0.65}
-.tip-row{display:flex;align-items:flex-start;gap:10px;margin-bottom:7px;padding:8px 10px;border-radius:2px;border:1px solid rgba(139,26,26,0.18);background:rgba(255,252,248,0.45);cursor:pointer;transition:all 0.15s}
-.tip-row:last-child{margin-bottom:0}
-.tip-row:hover{background:rgba(255,252,248,0.82)}
-.tip-row.sel{background:rgba(255,252,248,0.97);border-color:var(--crimson)}
-.tip-pct{font-family:'IM Fell English',serif;font-size:20px;color:var(--crimson-deep);flex-shrink:0;width:38px;text-align:center;margin-top:1px}
-.tip-desc{font-style:italic;font-size:12px;color:rgba(92,15,15,0.6);line-height:1.5}
-.tip-desc strong{font-style:normal;font-weight:600;font-size:12.5px;color:var(--dark)}
-.submit-area{margin-top:22px;text-align:center}
-.submit-note{font-family:'Caveat',cursive;font-size:13.5px;color:var(--crimson);opacity:0.5;margin-bottom:11px;line-height:1.6}
 
-/* thanks */
-.thanks-inner{position:relative;z-index:1;width:100%;max-width:380px;padding:60px 22px 80px;text-align:center}
-.thanks-title{font-family:'IM Fell English',serif;font-style:italic;font-size:38px;color:var(--crimson-deep);margin-bottom:5px}
-.thanks-sub{font-family:'Caveat',cursive;font-size:18px;color:var(--crimson);margin-bottom:20px;opacity:0.76}
-.order-summary{border:1px solid rgba(139,26,26,0.26);border-radius:2px;padding:14px 18px;background:rgba(255,252,248,0.62);text-align:left;margin-bottom:18px}
-.ord-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:0.5px solid rgba(139,26,26,0.13);font-size:13px}
+/* ── Chef K rabbit ── */
+.chef-wrap{display:inline-block;animation:float 3.5s ease-in-out infinite;margin-bottom:6px}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.chef-wrap img{display:block;filter:drop-shadow(0 4px 10px rgba(92,15,15,0.18))}
+.k-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:26px;height:26px;border-radius:50%;
+  background:var(--crimson);color:var(--cream2);
+  font-family:Georgia,serif;font-weight:bold;font-size:13px;
+  box-shadow:0 2px 7px rgba(139,26,26,0.35);
+  margin:0 auto 2px;
+}
+
+/* ── Inputs ── */
+.name-label{display:block;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:var(--crimson);opacity:0.65;margin-bottom:8px}
+.name-input{width:100%;max-width:240px;background:transparent;border:none;border-bottom:1.5px solid rgba(139,26,26,0.4);padding:7px 4px;font-family:'IM Fell English',serif;font-style:italic;font-size:22px;color:var(--crimson-deep);text-align:center;outline:none;display:block;margin:0 auto 16px}
+.name-input::placeholder{color:rgba(139,26,26,0.2)}
+.name-input:focus{border-bottom-color:var(--crimson-deep)}
+.btn-primary{display:block;width:100%;max-width:220px;margin:0 auto;padding:10px 28px;border:1.5px solid var(--crimson);border-radius:2px;background:var(--crimson);font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cream2);cursor:pointer;transition:all 0.2s}
+.btn-primary:hover{background:transparent;color:var(--crimson)}
+.btn-ghost{display:block;width:100%;max-width:220px;margin:8px auto 0;padding:9px 22px;border:1px solid rgba(139,26,26,0.38);border-radius:2px;background:transparent;font-family:'Cormorant Garamond',serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;color:var(--crimson);opacity:0.72;cursor:pointer;transition:all 0.2s}
+.btn-ghost:hover{border-color:var(--crimson);opacity:1}
+.chef-note{font-family:'Caveat',cursive;font-size:13px;color:var(--crimson);opacity:0.42;margin-top:14px;line-height:1.6}
+
+/* ── Menu page card (scrolls, no oval) ── */
+.menu-card{
+  background:var(--cream2);
+  border:2px solid var(--crimson);
+  border-radius:18px;
+  padding:36px 26px 48px;
+  width:100%;
+  max-width:400px;
+  position:relative;
+}
+.menu-card::before{
+  content:'';position:absolute;inset:7px;
+  border:0.75px solid rgba(139,26,26,0.25);
+  border-radius:12px;pointer-events:none;
+}
+.menu-for{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--crimson);opacity:0.65;margin-bottom:2px}
+.menu-title{font-family:'IM Fell English',serif;font-style:italic;font-size:44px;color:var(--crimson-deep);line-height:1}
+.menu-tagline{font-family:'Caveat',cursive;font-size:14px;color:var(--crimson);opacity:0.46;margin-top:3px}
+
+/* ── Options ── */
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{border:1px solid rgba(139,26,26,0.22);border-radius:3px;padding:9px 12px;cursor:pointer;background:rgba(250,246,239,0.6);transition:all 0.17s;user-select:none;-webkit-tap-highlight-color:transparent;text-align:left}
+.opt:hover{background:rgba(250,246,239,0.92);border-color:rgba(139,26,26,0.45)}
+.opt.sel{background:#FFF9F4;border-color:var(--crimson);border-width:1.5px}
+.opt-top{display:flex;align-items:center;gap:8px}
+.opt-dot{width:14px;height:14px;border:1.5px solid var(--crimson);border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:all 0.15s;opacity:0.5}
+.opt.sel .opt-dot{background:var(--crimson);border-color:var(--crimson);opacity:1}
+.opt.sel .opt-dot::after{content:'';width:4px;height:4px;border-radius:50%;background:var(--cream2);display:block}
+.opt-name{font-size:13px;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--crimson-deep)}
+.opt-desc{font-style:italic;font-size:11.5px;color:rgba(92,15,15,0.58);margin-top:3px;padding-left:22px;line-height:1.5}
+.opt-wink{font-size:12px;color:var(--crimson);margin-top:2px;padding-left:22px;font-family:'Caveat',cursive}
+
+/* ── Gratuity ── */
+.tips-box{border:1px solid rgba(139,26,26,0.22);border-radius:3px;padding:12px 14px;background:rgba(250,246,239,0.45)}
+.tips-lbl{font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--crimson);margin-bottom:8px;text-align:center;opacity:0.65}
+.tip-row{display:flex;align-items:flex-start;gap:9px;margin-bottom:6px;padding:7px 9px;border-radius:3px;border:1px solid rgba(139,26,26,0.17);background:rgba(250,246,239,0.45);cursor:pointer;transition:all 0.15s}
+.tip-row:last-child{margin-bottom:0}
+.tip-row:hover{background:rgba(250,246,239,0.85)}
+.tip-row.sel{background:#FFF9F4;border-color:var(--crimson)}
+.tip-pct{font-family:'IM Fell English',serif;font-size:18px;color:var(--crimson-deep);flex-shrink:0;width:34px;text-align:center;margin-top:1px}
+.tip-desc{font-style:italic;font-size:11.5px;color:rgba(92,15,15,0.58);line-height:1.5}
+.tip-desc strong{font-style:normal;font-weight:600;font-size:12px;color:var(--crimson-deep)}
+.submit-area{margin-top:20px;text-align:center}
+.submit-note{font-family:'Caveat',cursive;font-size:13px;color:var(--crimson);opacity:0.5;margin-bottom:10px;line-height:1.6}
+
+/* ── History ── */
+.hist-card{border:1px solid rgba(139,26,26,0.24);border-radius:3px;padding:11px 13px;background:rgba(250,246,239,0.75);text-align:left;margin-bottom:8px}
+.hist-card-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.hist-name{font-size:14px;font-weight:600;color:var(--crimson-deep)}
+.hist-time{font-size:10px;color:rgba(139,26,26,0.4);font-style:italic}
+.hist-row{font-size:12px;color:var(--crimson-deep);padding:2px 0;font-style:italic;line-height:1.5}
+.hist-cat{font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);font-style:normal;margin-right:4px;opacity:0.62}
+.hist-empty{font-family:'Caveat',cursive;font-size:15px;color:rgba(139,26,26,0.38);text-align:center;padding:24px 0}
+
+/* ── Thanks ── */
+.ord-row{display:flex;justify-content:space-between;align-items:baseline;padding:5px 0;border-bottom:0.5px solid rgba(139,26,26,0.13);font-size:12.5px}
 .ord-row:last-child{border-bottom:none}
-.ord-cat{font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);opacity:0.6}
-.ord-val{font-style:italic;color:var(--crimson-deep);font-size:13.5px}
-.thanks-note{font-family:'Caveat',cursive;font-size:15px;color:var(--crimson);opacity:0.56;line-height:1.8}
-.back-link{display:inline-block;margin-top:18px;font-size:11.5px;letter-spacing:0.14em;text-transform:uppercase;color:var(--crimson);opacity:0.46;cursor:pointer;text-decoration:none;border-bottom:0.5px solid rgba(139,26,26,0.26);padding-bottom:1px;transition:opacity 0.2s;font-family:'Cormorant Garamond',serif}
+.ord-cat{font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--crimson);opacity:0.6}
+.ord-val{font-style:italic;color:var(--crimson-deep);font-size:13px}
+.order-summary{border:1px solid rgba(139,26,26,0.24);border-radius:3px;padding:12px 16px;background:rgba(250,246,239,0.6);text-align:left;margin-bottom:16px}
+.thanks-note{font-family:'Caveat',cursive;font-size:14px;color:var(--crimson);opacity:0.58;line-height:1.8}
+
+.back-link{display:inline-block;margin-top:16px;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:var(--crimson);opacity:0.48;cursor:pointer;text-decoration:none;border-bottom:0.5px solid rgba(139,26,26,0.28);padding-bottom:1px;transition:opacity 0.2s;font-family:'Cormorant Garamond',serif}
 .back-link:hover{opacity:1}
-.toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);background:var(--crimson-deep);color:var(--cream);font-size:13px;letter-spacing:0.05em;padding:10px 24px;border-radius:2px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;font-family:'Cormorant Garamond',serif;font-style:italic;white-space:nowrap}
+.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:var(--crimson-deep);color:var(--cream2);font-size:13px;letter-spacing:0.05em;padding:9px 22px;border-radius:2px;opacity:0;transition:opacity 0.3s;pointer-events:none;z-index:999;font-family:'Cormorant Garamond',serif;font-style:italic;white-space:nowrap}
 .toast.on{opacity:1}
 </style>
 </head>
 <body>
 
-<!-- table_deco.webp as decorative strips top & bottom -->
-<div class="deco-top"><img src="table_deco.webp" alt=""></div>
-<div class="deco-bottom"><img src="table_deco.webp" alt=""></div>
-
-<div class="page-frame"></div>
-<div class="page-frame-inner"></div>
-
 <!-- ════ LANDING ════ -->
-<div id="pg-land" class="page page-center active">
-  <div class="inner" style="padding-top:0">
+<div id="pg-land" class="page active">
+  <div class="card">
 
-    <!--
-      Chef K = Schinako rabbit.webp (1199×1577), cropped to Holland Lop
-      3 cols × 4 rows → col_w=399.7px, row_h≈394px
-      Scale 150/399.7=0.3753 → img_w=450px, row3_top=296px
-    -->
-    <div class="chef-wrap" style="width:150px;height:190px">
-      <div class="rabbit-crop" style="width:150px;height:152px">
-        <img src="rabbit.webp" alt="Chef K"
-             style="position:absolute;width:450px;height:auto;top:-296px;left:0">
-      </div>
-      <svg viewBox="0 0 150 55" xmlns="http://www.w3.org/2000/svg"
-           style="position:absolute;top:0;left:0;width:150px;height:55px;pointer-events:none">
-        <rect x="46" y="40" width="58" height="9" rx="2.5" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1.1"/>
-        <ellipse cx="75" cy="28" rx="26" ry="20" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="1.1"/>
-        <path d="M57 25 Q75 20 93 25" fill="none" stroke="#8B1A1A" stroke-width="0.55" opacity="0.3"/>
-        <path d="M54 32 Q75 27 96 32" fill="none" stroke="#8B1A1A" stroke-width="0.45" opacity="0.2"/>
-      </svg>
-      <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-           width:32px;height:32px;background:#8B1A1A;border-radius:50%;
-           display:flex;align-items:center;justify-content:center;
-           font-family:Georgia,serif;font-size:15px;font-weight:bold;color:#F5F0E8;
-           box-shadow:0 2px 8px rgba(139,26,26,0.32);z-index:2">K</div>
+    <!-- Ribbon -->
+    <svg class="ribbon" viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 32 C48 24 20 30 8 20 C22 18 44 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 24 100 30 112 20 C98 18 76 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C48 38 28 30 10 38 C24 42 46 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 38 92 30 110 38 C96 42 74 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M48 28 Q55 18 60 22 Q65 18 72 28 Q65 34 60 30 Q55 34 48 28Z" fill="#FAF6EF" stroke="#8B1A1A" stroke-width="1.1"/>
+      <circle cx="60" cy="29" r="2.8" fill="#8B1A1A"/>
+    </svg>
+
+    <!-- Chef K -->
+    <div class="chef-wrap">
+      <img src="rabbit.png" alt="Chef K" style="width:130px;height:auto">
     </div>
+    <div class="k-badge">K</div>
 
-    <p class="land-eyebrow">Bienvenue chez</p>
-    <h1 class="land-title">Yaris'<br>Birthday</h1>
-    <p class="land-sub">Chef K's exclusive birthday menu<br>curated with love & mild chaos ✦</p>
+    <p class="eyebrow" style="margin-top:8px">Bienvenue chez</p>
+    <h1 class="card-title">Yaris'<br>Birthday</h1>
+    <p class="card-sub">Chef K's exclusive birthday menu<br>curated with love &amp; mild chaos ✦</p>
 
     <span class="name-label">Your name, s'il vous plaît</span>
     <input class="name-input" id="guestName" type="text" placeholder="e.g. Katie…" autocomplete="off" maxlength="40"/>
     <button class="btn-primary" onclick="enterMenu()">See the Menu</button>
-    <br>
     <button class="btn-ghost" onclick="showHistory()">View Past Orders ✦</button>
     <p class="chef-note">Chef K has been preparing since dawn.<br>Please don't keep him waiting.</p>
   </div>
@@ -168,44 +194,53 @@ body{background-image:repeating-linear-gradient(
 
 <!-- ════ HISTORY ════ -->
 <div id="pg-hist" class="page">
-  <div class="hist-inner">
-    <h2 class="hist-title">Order History</h2>
-    <p class="hist-sub">✦ &nbsp; all orders placed so far &nbsp; ✦</p>
-    <div class="hist-list" id="hist-list"></div>
-    <div style="text-align:center;margin-top:20px">
-      <span class="back-link" onclick="showPage('pg-land')">← Back to Home</span>
-    </div>
+  <div class="card" style="border-radius:18px;max-width:400px">
+    <svg class="ribbon" viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 32 C48 24 20 30 8 20 C22 18 44 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 24 100 30 112 20 C98 18 76 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C48 38 28 30 10 38 C24 42 46 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 38 92 30 110 38 C96 42 74 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M48 28 Q55 18 60 22 Q65 18 72 28 Q65 34 60 30 Q55 34 48 28Z" fill="#FAF6EF" stroke="#8B1A1A" stroke-width="1.1"/>
+      <circle cx="60" cy="29" r="2.8" fill="#8B1A1A"/>
+    </svg>
+    <h2 class="sec-script" style="font-size:34px;margin-bottom:4px">Order History</h2>
+    <p class="eyebrow" style="margin-bottom:18px">✦ &nbsp; all orders placed so far &nbsp; ✦</p>
+    <div id="hist-list"></div>
+    <span class="back-link" onclick="showPage('pg-land')">← Back to Home</span>
   </div>
 </div>
 
 <!-- ════ MENU ════ -->
-<div id="pg-menu" class="page">
-  <div class="menu-inner">
-    <div class="menu-header">
-      <div class="menu-for">A birthday menu for</div>
-      <div class="menu-title">Yaris</div>
-      <div class="menu-tagline">curated by Chef K · served with love & mild chaos</div>
+<div id="pg-menu" class="page" style="justify-content:flex-start;padding-top:24px">
+  <div class="menu-card">
+
+    <!-- ribbon -->
+    <div style="text-align:center;margin-bottom:8px">
+      <svg viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg" style="width:68px;height:34px">
+        <path d="M60 32 C48 24 20 30 8 20 C22 18 44 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+        <path d="M60 32 C72 24 100 30 112 20 C98 18 76 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+        <path d="M60 32 C48 38 28 30 10 38 C24 42 46 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+        <path d="M60 32 C72 38 92 30 110 38 C96 42 74 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+        <path d="M48 28 Q55 18 60 22 Q65 18 72 28 Q65 34 60 30 Q55 34 48 28Z" fill="#FAF6EF" stroke="#8B1A1A" stroke-width="1.1"/>
+        <circle cx="60" cy="29" r="2.8" fill="#8B1A1A"/>
+      </svg>
     </div>
 
-    <!-- small Chef K: scale 70/150=0.467 → width=210px, top=138px -->
-    <div class="chef-wrap" style="width:70px;height:89px;margin-top:8px;margin-bottom:4px">
-      <div class="rabbit-crop" style="width:70px;height:71px">
-        <img src="rabbit.webp" alt=""
-             style="position:absolute;width:210px;height:auto;top:-138px;left:0">
+    <div style="text-align:center;margin-bottom:4px">
+      <div class="menu-for">A birthday menu for</div>
+      <div class="menu-title">Yaris</div>
+      <div class="menu-tagline">curated by Chef K · served with love &amp; mild chaos</div>
+    </div>
+
+    <div style="text-align:center;margin:6px 0 2px">
+      <div class="chef-wrap" style="animation-duration:4s">
+        <img src="rabbit.png" alt="Chef K" style="width:70px;height:auto">
       </div>
-      <svg viewBox="0 0 70 26" xmlns="http://www.w3.org/2000/svg"
-           style="position:absolute;top:0;left:0;width:70px;height:26px;pointer-events:none">
-        <rect x="21" y="19" width="27" height="4" rx="1.5" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.8"/>
-        <ellipse cx="35" cy="12" rx="12" ry="9" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.8"/>
-      </svg>
-      <div style="position:absolute;bottom:2px;left:50%;transform:translateX(-50%);
-           width:16px;height:16px;background:#8B1A1A;border-radius:50%;
-           display:flex;align-items:center;justify-content:center;
-           font-family:Georgia,serif;font-size:8px;font-weight:bold;color:#F5F0E8">K</div>
+      <div class="k-badge" style="width:18px;height:18px;font-size:9px;margin-top:-2px">K</div>
     </div>
 
     <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
-    <div class="sec-title">Mains</div>
+    <div class="sec-script">Mains</div>
     <div class="opts" id="opts-mains">
       <div class="opt" onclick="pick(this,'mains')">
         <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Fast Food Marathon</span></div>
@@ -222,14 +257,14 @@ body{background-image:repeating-linear-gradient(
     </div>
 
     <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
-    <div class="sec-title">Drinks</div>
+    <div class="sec-script">Drinks</div>
     <div class="opts" id="opts-drinks">
       <div class="opt" onclick="pick(this,'drinks')">
         <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Boba Run</span></div>
         <div class="opt-desc">Minimum 2 shops. We will debate which is better the entire drive. No resolution will be reached. This is tradition.</div>
       </div>
       <div class="opt" onclick="pick(this,'drinks')">
-        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Beer & Wine Tasting</span></div>
+        <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Beer &amp; Wine Tasting</span></div>
         <div class="opt-desc">We nod slowly and say "notes of oak, with hints of regret." Nobody knows what that means. We are having the time of our lives.</div>
       </div>
       <div class="opt" onclick="pick(this,'drinks')">
@@ -239,7 +274,7 @@ body{background-image:repeating-linear-gradient(
     </div>
 
     <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
-    <div class="sec-title">Evening</div>
+    <div class="sec-script">Evening</div>
     <div class="opts" id="opts-evening">
       <div class="opt" onclick="pick(this,'evening')">
         <div class="opt-top"><span class="opt-dot"></span><span class="opt-name">Camelback Night View</span></div>
@@ -257,7 +292,7 @@ body{background-image:repeating-linear-gradient(
     </div>
 
     <div class="divider"><div class="dline"></div><div class="dstar">✦</div><div class="dline"></div></div>
-    <div class="sec-title">Gratuity</div>
+    <div class="sec-script">Gratuity</div>
     <div class="tips-box">
       <div class="tips-lbl">✦ &nbsp; suggested tip for chef K &nbsp; ✦</div>
       <div class="tip-row" onclick="pickTip(this,'15%')">
@@ -277,34 +312,28 @@ body{background-image:repeating-linear-gradient(
     <div class="submit-area">
       <p class="submit-note">Chef K is watching from the kitchen window.<br>Place your order when ready.</p>
       <button class="btn-primary" onclick="submitOrder()">Place Order ✦</button>
-      <br><span class="back-link" onclick="showPage('pg-land')" style="margin-top:14px;display:inline-block">← Back to Home</span>
+      <span class="back-link" onclick="showPage('pg-land')" style="display:inline-block;margin-top:12px">← Back to Home</span>
     </div>
   </div>
 </div>
 
 <!-- ════ THANKS ════ -->
-<div id="pg-thanks" class="page page-center">
-  <div class="thanks-inner">
-    <!-- scale 120/150=0.8 → width=360px, top=237px -->
-    <div class="chef-wrap" style="width:120px;height:152px">
-      <div class="rabbit-crop" style="width:120px;height:122px">
-        <img src="rabbit.webp" alt=""
-             style="position:absolute;width:360px;height:auto;top:-237px;left:0">
-      </div>
-      <svg viewBox="0 0 120 44" xmlns="http://www.w3.org/2000/svg"
-           style="position:absolute;top:0;left:0;width:120px;height:44px;pointer-events:none">
-        <rect x="37" y="32" width="46" height="7" rx="2" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.95"/>
-        <ellipse cx="60" cy="22" rx="21" ry="16" fill="#FAFAF8" stroke="#8B1A1A" stroke-width="0.95"/>
-        <path d="M46 19 Q60 15 74 19" fill="none" stroke="#8B1A1A" stroke-width="0.45" opacity="0.28"/>
-      </svg>
-      <div style="position:absolute;bottom:4px;left:50%;transform:translateX(-50%);
-           width:26px;height:26px;background:#8B1A1A;border-radius:50%;
-           display:flex;align-items:center;justify-content:center;
-           font-family:Georgia,serif;font-size:12px;font-weight:bold;color:#F5F0E8;
-           box-shadow:0 2px 6px rgba(139,26,26,0.28)">K</div>
+<div id="pg-thanks" class="page">
+  <div class="card" style="border-radius:18px;max-width:380px">
+    <svg class="ribbon" viewBox="0 0 120 52" xmlns="http://www.w3.org/2000/svg">
+      <path d="M60 32 C48 24 20 30 8 20 C22 18 44 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 24 100 30 112 20 C98 18 76 26 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C48 38 28 30 10 38 C24 42 46 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M60 32 C72 38 92 30 110 38 C96 42 74 36 60 32Z" fill="none" stroke="#8B1A1A" stroke-width="1.3"/>
+      <path d="M48 28 Q55 18 60 22 Q65 18 72 28 Q65 34 60 30 Q55 34 48 28Z" fill="#FAF6EF" stroke="#8B1A1A" stroke-width="1.1"/>
+      <circle cx="60" cy="29" r="2.8" fill="#8B1A1A"/>
+    </svg>
+    <div class="chef-wrap">
+      <img src="rabbit.png" alt="Chef K" style="width:110px;height:auto">
     </div>
-    <h2 class="thanks-title">Order received!</h2>
-    <p class="thanks-sub" id="thanks-line">Chef K is already on it ✦</p>
+    <div class="k-badge">K</div>
+    <h2 style="font-family:'IM Fell English',serif;font-style:italic;font-size:34px;color:var(--crimson-deep);margin:8px 0 4px">Order received!</h2>
+    <p style="font-family:'Caveat',cursive;font-size:17px;color:var(--crimson);margin-bottom:18px;opacity:0.78" id="thanks-line">Chef K is already on it ✦</p>
     <div class="order-summary" id="order-summary"></div>
     <p class="thanks-note">Chef K did a little happy dance.<br>The apron spun. It was beautiful.<br><br><em>Happy birthday, Yaris ✦</em></p>
     <span class="back-link" onclick="goHome()">← Back to Home</span>
