@@ -378,7 +378,7 @@ function showHistory(){
 }
 
 function pick(el,sec){document.querySelectorAll('#opts-'+sec+' .opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');sel[sec]=el.querySelector('.opt-name').textContent.trim();}
-function pickTip(el,pct){document.querySelectorAll('.tip-pill').forEach(function(r){r.classList.remove('sel')});el.classList.add('sel');sel.tip=pct;}
+function pickTip(el,pct){document.querySelectorAll('.tip-pill').forEach(function(r){r.classList.remove('sel')});el.classList.add('sel');var label=el.querySelector('.tip-label').textContent.trim();sel.tip=pct+' · '+label;}
 
 function submitOrder(){
   if(!sel.mains&&!sel.drinks&&!sel.evening){toast("Please pick at least one item");return;}
