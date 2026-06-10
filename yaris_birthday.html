@@ -347,15 +347,53 @@ body{
 <div class="toast" id="toast"></div>
 <script>
 var guest='',sel={mains:null,drinks:null,evening:null,tip:null};
+var BIN_ID='6a28a9b6da38895dfea395ec';
+var BIN_KEY='$2a$10$eS717/TfT1W7JhndqsW47.UYIJksEar39KK8HTMx/W1gldk2Dx8GK';
+var BIN_URL='https://api.jsonbin.io/v3/b/'+BIN_ID;
+
 function showPage(id){document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});document.getElementById(id).classList.add('active');window.scrollTo(0,0);}
-function getOrders(){try{return JSON.parse(localStorage.getItem('yaris_orders')||'[]')}catch(e){return[]}}
-function saveOrders(a){try{localStorage.setItem('yaris_orders',JSON.stringify(a))}catch(e){}}
+
+function fetchOrders(cb){
+  fetch(BIN_URL+'/latest',{headers:{'X-Master-Key':BIN_KEY}})
+    .then(function(r){return r.json()})
+    .then(function(d){cb((d.record&&d.record.orders)||[])})
+    .catch(function(){cb([])});
+}
+function saveOrders(orders,cb){
+  fetch(BIN_URL,{method:'PUT',headers:{'Content-Type':'application/json','X-Master-Key':BIN_KEY},body:JSON.stringify({orders:orders})})
+    .then(function(){if(cb)cb()}).catch(function(){if(cb)cb()});
+}
+
 document.getElementById('guestName').addEventListener('keydown',function(e){if(e.key==='Enter')enterMenu()});
-function enterMenu(){var v=document.getElementById('guestName').value.trim();if(!v){toast("Chef K needs your name");return;}guest=v;sel={mains:null,drinks:null,evening:null,tip:null};document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});document.querySelectorAll('.tip-row').forEach(function(r){r.classList.remove('sel')});showPage('pg-menu');}
-function showHistory(){var orders=getOrders(),el=document.getElementById('hist-list');if(!orders.length){el.innerHTML='<div class="hist-empty">No orders yet — Chef K is waiting patiently</div>';}else{el.innerHTML=orders.map(function(o,i){return'<div class="hist-card"><div class="hist-card-top"><span class="hist-name">'+(i+1)+'. '+o.name+'</span><span class="hist-time">'+o.time+'</span></div><div class="hist-row"><span class="hist-cat">Mains</span>'+o.mains+'</div><div class="hist-row"><span class="hist-cat">Drinks</span>'+o.drinks+'</div><div class="hist-row"><span class="hist-cat">Evening</span>'+o.evening+'</div><div class="hist-row"><span class="hist-cat">Tip</span>'+o.tip+'</div></div>';}).join('');}showPage('pg-hist');}
+function enterMenu(){var v=document.getElementById('guestName').value.trim();if(!v){toast("Chef K needs your name");return;}guest=v;sel={mains:null,drinks:null,evening:null,tip:null};document.querySelectorAll('.opt').forEach(function(o){o.classList.remove('sel')});document.querySelectorAll('.tip-pill').forEach(function(r){r.classList.remove('sel')});showPage('pg-menu');}
+
+function showHistory(){
+  var el=document.getElementById('hist-list');
+  el.innerHTML='<div class="hist-empty">Loading...</div>';
+  showPage('pg-hist');
+  fetchOrders(function(orders){
+    if(!orders.length){el.innerHTML='<div class="hist-empty">No orders yet — Chef K is waiting patiently</div>';}
+    else{el.innerHTML=orders.map(function(o,i){return'<div class="hist-card"><div class="hist-card-top"><span class="hist-name">'+(i+1)+'. '+o.name+'</span><span class="hist-time">'+o.time+'</span></div><div class="hist-row"><span class="hist-cat">Mains</span>'+o.mains+'</div><div class="hist-row"><span class="hist-cat">Drinks</span>'+o.drinks+'</div><div class="hist-row"><span class="hist-cat">Evening</span>'+o.evening+'</div><div class="hist-row"><span class="hist-cat">Tip</span>'+o.tip+'</div></div>';}).join('');}
+  });
+}
+
 function pick(el,sec){document.querySelectorAll('#opts-'+sec+' .opt').forEach(function(o){o.classList.remove('sel')});el.classList.add('sel');sel[sec]=el.querySelector('.opt-name').textContent.trim();}
 function pickTip(el,pct){document.querySelectorAll('.tip-pill').forEach(function(r){r.classList.remove('sel')});el.classList.add('sel');sel.tip=pct;}
-function submitOrder(){if(!sel.mains&&!sel.drinks&&!sel.evening){toast("Please pick at least one item");return;}var order={name:guest,time:new Date().toLocaleString(),mains:sel.mains||'—',drinks:sel.drinks||'—',evening:sel.evening||'—',tip:sel.tip||'No tip (Chef K noticed.)'};var orders=getOrders();orders.push(order);saveOrders(orders);document.getElementById('thanks-line').textContent='Merci, '+guest+' — Chef K is already on it ✦';document.getElementById('order-summary').innerHTML='<div class="ord-row"><span class="ord-cat">Mains</span><span class="ord-val">'+order.mains+'</span></div><div class="ord-row"><span class="ord-cat">Drinks</span><span class="ord-val">'+order.drinks+'</span></div><div class="ord-row"><span class="ord-cat">Evening</span><span class="ord-val">'+order.evening+'</span></div><div class="ord-row"><span class="ord-cat">Tip</span><span class="ord-val">'+order.tip+'</span></div>';showPage('pg-thanks');}
+
+function submitOrder(){
+  if(!sel.mains&&!sel.drinks&&!sel.evening){toast("Please pick at least one item");return;}
+  var order={name:guest,time:new Date().toLocaleString(),mains:sel.mains||'—',drinks:sel.drinks||'—',evening:sel.evening||'—',tip:sel.tip||'No tip (Chef K noticed.)'};
+  toast("Sending order...");
+  fetchOrders(function(orders){
+    orders.push(order);
+    saveOrders(orders,function(){
+      document.getElementById('thanks-line').textContent='Merci, '+guest+' — Chef K is already on it ✦';
+      document.getElementById('order-summary').innerHTML='<div class="ord-row"><span class="ord-cat">Mains</span><span class="ord-val">'+order.mains+'</span></div><div class="ord-row"><span class="ord-cat">Drinks</span><span class="ord-val">'+order.drinks+'</span></div><div class="ord-row"><span class="ord-cat">Evening</span><span class="ord-val">'+order.evening+'</span></div><div class="ord-row"><span class="ord-cat">Tip</span><span class="ord-val">'+order.tip+'</span></div>';
+      showPage('pg-thanks');
+    });
+  });
+}
+
 function goHome(){document.getElementById('guestName').value='';showPage('pg-land');}
 function toast(msg){var t=document.getElementById('toast');t.textContent=msg;t.classList.add('on');setTimeout(function(){t.classList.remove('on')},2600);}
 </script>
